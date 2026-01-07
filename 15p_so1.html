@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra Tiếng Anh</title>
+    <style>
+        /* --- PHẦN GIAO DIỆN (CSS) --- */
+        :root {
+            --primary-color: #4CAF50;
+            --bg-color: #f4f4f9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: var(--primary-color); }
+        
+        .info-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c8e6c9;
+        }
+        .info-box label { font-weight: bold; display: block; margin-top: 10px; }
+        .info-box input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .question p { font-weight: bold; font-size: 1.1em; }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .options label:hover { background-color: #f0f0f0; }
+
+        button#submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button#submit-btn:hover { background-color: #45a049; }
+        button#submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        #notification {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            border-radius: 5px;
+        }
+        .success { background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; }
+        .error { background-color: #f2dede; color: #a94442; border: 1px solid #ebccd1; }
+    
+                /* --- ĐỒNG HỒ ĐẾM NGƯỢC --- */
+        #timer-box {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: #ff5722; /* Màu cam nổi bật */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000; /* Luôn nổi lên trên cùng */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        }
+    #timer-box.warning {
+    background-color: #d32f2f; /* Chuyển màu đỏ khi sắp hết giờ */
+    animation: blink 1s infinite; /* Nhấp nháy */
+        }
+    @keyframes blink {
+    50% { opacity: 0.7; }
+    }
+    
+    </style>
+    
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']] 
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div id="timer-box">
+    <span>⏱️ Thời gian: </span>
+    <span id="countdown">15:00</span>
+    </div>
+    
+<div class="container">
+    <h1>📝 BÀI KIỂM TRA TIẾNG ANH</h1>
+    
+    <div class="info-box">
+        <label>Họ và Tên:</label>
+        <input type="text" id="fullname" placeholder="Nhập họ tên đầy đủ..." required>
+        
+        <label>Lớp:</label>
+        <input type="text" id="class_name" placeholder="Ví dụ: 12A1..." required>
+    </div>
+
+    <form id="quiz-form">
+        
+        <div class="question">
+            <p>Câu 1: She ______ to school every morning.</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. go</label>
+                <label><input type="radio" name="q1" value="B"> B. goes</label>
+                <label><input type="radio" name="q1" value="C"> C. going</label>
+                <label><input type="radio" name="q1" value="D"> D. went</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>Câu 2: They ______ football yesterday.</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. play</label>
+                <label><input type="radio" name="q2" value="B"> B. plays</label>
+                <label><input type="radio" name="q2" value="C"> C. played</label>
+                <label><input type="radio" name="q2" value="D"> D. playing</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>Câu 3: Cho hàm số $y=x^2 + 2x - 3$. Tìm giá trị nhỏ nhất của hàm số.</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. $-4$</label>
+                <label><input type="radio" name="q3" value="B"> B. $-3$</label>
+                <label><input type="radio" name="q3" value="C"> C. $0$</label>
+                <label><input type="radio" name="q3" value="D"> D. $1$</label>
+            </div>
+        </div>
+
+    </form>
+
+    <button id="submit-btn" onclick="submitTest()">NỘP BÀI</button>
+    
+    <div id="notification"></div>
+</div>
+
+<script>
+    // --- CẤU HÌNH ---
+    // 👇👇👇 DÁN LINK GOOGLE APPS SCRIPT CỦA BẠN VÀO DƯỚI ĐÂY 👇👇👇
+    const googleScriptURL = 'https://script.google.com/macros/s/AKfycbyg5KT1vKt8j-TkjJEQEOxmfj2IOgLbESw8VMyfWoVygXtYsolpiJbf9-imXl8_AB_-_g/exec';
+
+    // 👇👇👇 ĐÁP ÁN ĐÚNG Ở ĐÂY (Bạn đang tìm đoạn này đúng không?) 👇👇👇
+    const correctAnswers = {
+        q1: "B", // goes
+        q2: "C", // played
+        q3: "A"  // -4
+    };
+
+
+
+
+    // --- CẤU HÌNH THỜI GIAN ---
+    const TIME_LIMIT = 15; // Phút (Bạn chỉnh sửa số phút tại đây)
+    let timeInSeconds = TIME_LIMIT * 60;
+    let timerInterval;
+
+    // Tự động chạy đồng hồ khi tải trang
+    window.onload = function() {
+        startTimer();
+    };
+
+    function startTimer() {
+        const display = document.getElementById('countdown');
+        const timerBox = document.getElementById('timer-box');
+
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+
+            // Thêm số 0 đằng trước nếu nhỏ hơn 10 (ví dụ: 09, 05)
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            // Hiệu ứng khi còn dưới 1 phút (đổi màu đỏ nhấp nháy)
+            if (timeInSeconds < 60) {
+                timerBox.classList.add("warning");
+            }
+
+            // HẾT GIỜ
+            if (--timeInSeconds < 0) {
+                clearInterval(timerInterval);
+                handleTimeOut(); // Gọi hàm xử lý hết giờ
+            }
+        }, 1000);
+    }
+
+    function handleTimeOut() {
+        alert("⏰ ĐÃ HẾT GIỜ LÀM BÀI! Hệ thống sẽ tự động nộp bài của bạn.");
+        
+        // Xử lý trường hợp học sinh chưa nhập tên mà hết giờ
+        // Nếu không điền cái này, hàm submitTest cũ sẽ chặn không cho nộp
+        let nameInput = document.getElementById("fullname");
+        let classInput = document.getElementById("class_name");
+        
+        if (!nameInput.value.trim()) {
+            nameInput.value = "Hết giờ (Chưa điền tên)";
+        }
+        if (!classInput.value.trim()) {
+            classInput.value = "Không rõ";
+        }
+
+        // Gọi hàm nộp bài có sẵn
+        submitTest();
+    }
+    // --- HÀM XỬ LÝ NỘP BÀI ---
+    function submitTest() {
+        const fullName = document.getElementById("fullname").value.trim();
+        const className = document.getElementById("class_name").value.trim();
+        const btn = document.getElementById("submit-btn");
+        const notif = document.getElementById("notification");
+
+        if (!fullName || !className) {
+            alert("Vui lòng nhập đầy đủ Họ Tên và Lớp!");
+            return;
+        }
+
+        if (googleScriptURL.includes("HÃY_DÁN_LINK")) {
+            alert("Lỗi: Giáo viên chưa cấu hình đường dẫn Google Sheet!");
+            return;
+        }
+
+        let score = 0;
+        let totalQuestions = Object.keys(correctAnswers).length;
+        
+        for (let key in correctAnswers) {
+            let userOption = document.querySelector(`input[name="${key}"]:checked`);
+            if (userOption && userOption.value === correctAnswers[key]) {
+                score++;
+            }
+        }
+        
+        let finalScore = `${score}/${totalQuestions}`;
+
+        btn.disabled = true;
+        btn.innerText = "Đang chấm và nộp bài...";
+        notif.style.display = "none";
+
+        const formData = new FormData();
+        formData.append("Họ và Tên", fullName);
+        formData.append("Lớp", className);
+        formData.append("Điểm số", finalScore);
+
+        fetch(googleScriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                notif.className = "success";
+                notif.innerHTML = `✅ Nộp bài thành công!<br>Bạn đạt: <b>${finalScore}</b> điểm.`;
+                notif.style.display = "block";
+                btn.innerText = "ĐÃ NỘP XONG";
+                let inputs = document.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = true);
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                notif.className = "error";
+                notif.innerText = "⚠️ Có lỗi xảy ra khi nộp bài. Vui lòng thử lại.";
+                notif.style.display = "block";
+                btn.disabled = false;
+                btn.innerText = "NỘP BÀI";
+            });
+    }
+</script>
+
+</body>
+</html>
+
+
